@@ -1,3 +1,59 @@
+<?php 
+
+session_start();
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $api_url = "http://localhost/ecommerce/websiteA/loginServer.php";
+    $header = array(
+        'Content-Type: application/xml'
+    );
+
+    $data = '<?xml version="1.0" encoding="UTF-8"?>
+            <user>
+                <username>'.$username.'</username>
+                <password>'.$password.'</password>
+            </user>';
+
+    $curl = curl_init();
+
+    curl_setopt($curl, CURLOPT_URL, $api_url);
+    curl_setopt($curl, CURLOPT_POST, true);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
+
+    $response = curl_exec($curl);
+
+    curl_close($curl);
+
+    
+
+
+    //var_dump() ; 
+    //echo $response[0];
+    // $response['id']
+
+    if ($response === "admin") {
+        $_SESSION["username"] = $username;
+        $_SESSION["role"]     = $response;
+        echo "admin";
+        header("location: ../admin/dashboard.php");
+    }elseif ($response === "user") {
+        $_SESSION["username"] = $username;
+        $_SESSION["role"]     = $response;
+        echo "user";
+        header("location: ../user/product_cataloge/view_product.php");
+    }
+    
+}
+
+
+
+
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -44,13 +100,14 @@
         </style>
     </head>
     <body>
-        <form action="login.php" method="POST">
-            <h1>Admin Login</h1>
+        <form action="" method="POST">
+            <h1>Login Page</h1>
             <input type="text" name="username" placeholder="Username">
             <br><br>
             <input type="password" name="password" placeholder="Password">
             <br><br>
             <input type="submit" value="Login">
+            DO Not Have Account ?  <a href="http://localhost/ecommerce/websiteB/user/register/register.php" >Register Here</a>
         </form>
     </body>
 </html>

@@ -1,3 +1,13 @@
+<?php 
+
+session_start();
+// if (isset($_SESSION['username']) && isset($_SESSION['role'])) {
+  
+// }else {
+//   exit();
+// }
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,7 +41,6 @@
           border-bottom: none;
         }
       
-      
         li a:hover {
           background-color: #555;
           color: white;
@@ -41,12 +50,16 @@
 <body>
 
 
-    <h2>Manage Users</h2>
+    <h2>Admin Panel</h2>
     <ul>
-        <li><a href="userList.php">View Users List</a></li>
-        <li><a href="viewUserDetails.php">View Users Details</a></li>
-        <li><a href="#">Edit Users Details</a></li>
-        <li><a href="#">Delete User</a></li>
+        
+        <li><a href="#">Manage Product Catalog</a></li>
+        <li><a href="#">Manage Order</a></li>
+        <li><a href="manage_user/index.php">Manage Users</a></li>
+        <li><a href="#">Sales Manage</a></li>
+        <li><a href="#">Manage Coupons</a></li>
+        <li><a href="#">Manage Shipping Option</a></li>
+        <li><a href="../logout/logout.php">Logout</a></li>
     </ul>
     
 </body>

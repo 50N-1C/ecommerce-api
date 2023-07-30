@@ -1,5 +1,5 @@
 <?php 
-
+session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"];
     $email    = $_POST["email"];
@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }else {
 
-        $api_url="http://localhost/ecommerce/websiteA/admin_server/register_server/registerServer.php";
+        $api_url="http://localhost/ecommerce/websiteA/user_server/register_user/register_server.php";
         $header = array(
             'Content-Type: application/xml'
         );
@@ -52,8 +52,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <h2 style='text-align: center; color: green;'>SignUp successfully</h2>    
                         <br><br>
                         <h3 style='text-align: center;'>
-                        <a href='login.php'>Go To Login</a>
+                        <a href='http://localhost/ecommerce/websiteB/login/login.php'>Go To Login</a>
                         </h3>");
+                        
+        }elseif ($response == "failed") {
+            echo $response ;
         }
 
     }
@@ -64,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Registration Admin page</title>
+        <title>Registration page</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -107,7 +110,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </style>
     </head>
     <body>
-        <h1 style="text-align:center;">Admin Registration </h1>
+        <h1 style="text-align:center;">Registration Page</h1>
 
         <form style="text-align:center;" action="" method="POST">
         <input type="text" name="username" placeholder="Username" autocomplete="off">

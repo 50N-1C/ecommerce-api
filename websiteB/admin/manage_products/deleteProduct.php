@@ -1,37 +1,26 @@
 <?php 
+session_start();
+// if (isset($_SESSION['username']) && isset($_SESSION['role'])) {
+  
+// }else {
+//   exit();
+// }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST["username"];
-    $email    = $_POST["email"];
-    $password = $_POST["password"];
+    $id = $_POST["id"];
+   
 
-    if (empty($username)) {
-        
-        $error1 = "can not be empty .";
+    if (isset($_POST["id"])) {
 
-        if (empty($email)) {
-
-            $error2 = "can not be empty .";
-
-            if (empty($password)) {
-
-                $error3 = "can not be empty .";
-                
-            }
-        }
-    }else {
-
-        $api_url="http://localhost/ecommerce/websiteA/admin_server/register_server/registerServer.php";
+        $api_url="http://localhost/ecommerce/website_a/manage_products_server/deleteProduct_server.php"; //change this to http://localhost/ecommerce/websiteA/admin_server/manage_products_server/deleteProduct.php
         $header = array(
             'Content-Type: application/xml'
         );
 
         $data = '<?xml version="1.0" encoding="UTF-8"?>
-        <user>
-            <username>'.$username.'</username>
-            <email>'.$email.'</email>
-            <password>'.$password.'</password>
-        </user>';
+        <product>
+            <id>'.$id.'</id>
+        </product>';
 
         $curl = curl_init();
 
@@ -45,15 +34,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         curl_close($curl);
 
-        //echo $response ;
+        echo $response ;
 
         if ($response == "done") {
-            die("
-                        <h2 style='text-align: center; color: green;'>SignUp successfully</h2>    
-                        <br><br>
-                        <h3 style='text-align: center;'>
-                        <a href='login.php'>Go To Login</a>
-                        </h3>");
+            header("Location: productList.php");
+            die("Edited Successfully");
+        }else{
+            echo "Something went wrong";
         }
 
     }
@@ -64,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Registration Admin page</title>
+        <title>Delete a Product</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -92,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 box-sizing: border-box;
             }
             input[type=submit] {
-                background-color: #4CAF50;
+                background-color: #ff0000;
                 color: white;
                 padding: 14px 20px;
                 margin: 8px 0;
@@ -102,27 +89,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 width: 100%;
             }
             input[type=submit]:hover {
-                background-color: #45a049;
+                background-color: #990000;
             }
         </style>
     </head>
     <body>
-        <h1 style="text-align:center;">Admin Registration </h1>
+        <h1 style="text-align:center;">Delete a Product</h1>
 
-        <form style="text-align:center;" action="" method="POST">
-        <input type="text" name="username" placeholder="Username" autocomplete="off">
-        
-        <p style="color: red;" ><?php echo @$error1 ;?></p>
-        <input type="email" name="email" placeholder="email" autocomplete="off">
-        
-        <p style="color: red;" ><?php echo @$error2 ;?></p>
-        <input type="password" name="password" placeholder="New Password" autocomplete="new-password">
-        
-        <p style="color: red;" ><?php echo @$error3 ;?></p>
-        <input type="submit" value="register">
+        <form style="text-align:center;" action="#" method="POST">
+        <input type="number" name="id" placeholder="Product ID" autocomplete="off" required>
+        <input type="submit" value="Delete">
         <br><br>
-        Have an Account ?  <a href="http://localhost/ecommerce/websiteB/login/login.php" >Login Here</a>
         </form>
     </body>
 </html>
-

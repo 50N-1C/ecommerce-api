@@ -1,5 +1,4 @@
 <?php
-    
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
@@ -18,16 +17,24 @@
 
         //echo "your username is " .$username . " and password " . $password ; 
         
-        $query = $con->prepare("SELECT `name`, `role`, `password` FROM `users` WHERE `name` = ? AND `password` = ?"); 
+        $query = $con->prepare("SELECT `id`,`name`, `role`, `password` FROM `users` WHERE `name` = ? AND `password` = ?"); 
         $query->execute(array($username, $password)); 
         $check = $query->rowCount(); 
         $result = $query->fetchAll(PDO::FETCH_ASSOC); 
- 
+        
+        
         if ($check > 0) {  
             foreach($result as $item) { 
                 $role = $item["role"]; 
+                // $id   = $item['id'];
             } 
- 
+
+            // $response = array(
+            //     "role"=>$role,
+            //     "id"=> $id
+            // );
+            // print_r($response);
+                
             if ($role === "admin") { 
                 $_SESSION["role"] = $role; 
                 
@@ -42,6 +49,8 @@
                 
                 echo "user"; 
             } 
+            
+
         } else { 
             echo "Invalid username/password"; 
         } 

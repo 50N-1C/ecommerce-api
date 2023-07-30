@@ -1,37 +1,22 @@
 <?php 
-
+session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+    $oldname  = $_SESSION["username"];
     $username = $_POST["username"];
     $email    = $_POST["email"];
-    $password = $_POST["password"];
 
-    if (empty($username)) {
-        
-        $error1 = "can not be empty .";
-
-        if (empty($email)) {
-
-            $error2 = "can not be empty .";
-
-            if (empty($password)) {
-
-                $error3 = "can not be empty .";
-                
-            }
-        }
-    }else {
-
-        $api_url="http://localhost/ecommerce/websiteA/admin_server/register_server/registerServer.php";
+    $api_url = "http://localhost/ecommerce/websiteA/user_server/account_Info_server/updateAccountServer.php";
         $header = array(
             'Content-Type: application/xml'
         );
 
         $data = '<?xml version="1.0" encoding="UTF-8"?>
-        <user>
-            <username>'.$username.'</username>
-            <email>'.$email.'</email>
-            <password>'.$password.'</password>
-        </user>';
+                <user>
+                    <oldname>'.$oldname.'</oldname>
+                    <username>'.$username.'</username>
+                    <email>'.$email.'</email>
+                </user>';
 
         $curl = curl_init();
 
@@ -45,18 +30,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         curl_close($curl);
 
-        //echo $response ;
+        //echo $response ; 
 
         if ($response == "done") {
-            die("
-                        <h2 style='text-align: center; color: green;'>SignUp successfully</h2>    
-                        <br><br>
-                        <h3 style='text-align: center;'>
-                        <a href='login.php'>Go To Login</a>
-                        </h3>");
+            $_SESSION["username"] = $username ;
+            
+            header("location: viewAccount.php");
+            exit();
+
+        }else {
+            $message = " failed . ";
         }
 
-    }
 }
 
 ?>
@@ -64,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Registration Admin page</title>
+        <title>Update Account info</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -82,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 text-align: center;
                 color: #333;
             }
-            input[type=text], input[type=password], input[type=email] {
+            input[type=text], input[type=email] {
                 width: 100%;
                 padding: 12px 20px;
                 margin: 8px 0;
@@ -107,22 +92,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </style>
     </head>
     <body>
-        <h1 style="text-align:center;">Admin Registration </h1>
-
-        <form style="text-align:center;" action="" method="POST">
-        <input type="text" name="username" placeholder="Username" autocomplete="off">
-        
-        <p style="color: red;" ><?php echo @$error1 ;?></p>
-        <input type="email" name="email" placeholder="email" autocomplete="off">
-        
-        <p style="color: red;" ><?php echo @$error2 ;?></p>
-        <input type="password" name="password" placeholder="New Password" autocomplete="new-password">
-        
-        <p style="color: red;" ><?php echo @$error3 ;?></p>
-        <input type="submit" value="register">
-        <br><br>
-        Have an Account ?  <a href="http://localhost/ecommerce/websiteB/login/login.php" >Login Here</a>
+        <form action="" method="POST">
+            <h1>Update Account Info</h1>
+            <input type="text" name="username" placeholder="Enter New Username">
+            <br><br>
+            <input type="email" name="email" placeholder="Enter New Email">
+            <br><br>
+            <input type="submit" value="Update">
+            <br><br><h3 style="color:green;"> <?php echo @$message ?></h3>
         </form>
     </body>
 </html>
-
