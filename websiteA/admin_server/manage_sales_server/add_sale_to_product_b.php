@@ -12,12 +12,12 @@ $productID = intval($xml->id);
 $saleAmount = floatval($xml->sale_amount);
 
 $sql = "UPDATE product SET Sales = $saleAmount WHERE id = $productID";
-
-if ($conn->query($sql) === TRUE) {
+$result = $con->query($sql);
+if ($result) {
   echo "Record updated successfully";
 } else {
   echo "Error updating record: " ;
 }
 
-$conn->close();
+closeConnection();
 ?>

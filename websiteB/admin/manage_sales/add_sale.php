@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $xml = new SimpleXMLElement($response);
         foreach ($xml->product as $product) {
             echo "Product ID: " . $product->id . " - Name: " . $product->name . 
-            " - <form action='http://localhost/ecommerce/websiteA/admin_server/manage_sales_server/add_sale_to_product.php' method='post'>
+            " - <form action='http://localhost/ecommerce/websiteB/admin/manage_sales/add_sale_to_product.php' method='post'>
             <input type='hidden' name='id' value='" . $product->id . "'>
             <input type='number' name='sale_amount' min='0' step='.01' required>
             <input type='submit' value='Add Sale'>
