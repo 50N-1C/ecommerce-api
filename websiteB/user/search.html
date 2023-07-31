@@ -1,0 +1,61 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 300px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 style="text-align: center;">Search Products</h2>
+        <form action="search.php" method="get">
+            <input type="text" name="search" placeholder="Enter Product Name " required>
+            <input type="submit" value="Search">
+        </form>
+    </div>
+    <table style="width:100%">
+        <tr>
+    <th>Name</th>
+    <th>Price</th>
+    <th>Description</th>
+    <th>Quantity</th>
+    <th>buy</th>
+        </tr>
+        <?php echo @$result ?>
+    </table>
+    <h3 style="text-align:center"><?php echo @$no?></h3>
+
+</body>
+</html>
